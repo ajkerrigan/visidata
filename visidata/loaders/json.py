@@ -19,11 +19,8 @@ class JsonSheet(PythonSheet):
                 ret = json.load(fp)
 
             if isinstance(ret, dict):
-                yield ret
-                for k in ret:
-                    self.addColumn(ColumnItem(k, type=deduceType(self.rows[0][k])))
-            else:
-                yield from Progress(ret)
+                ret = [ret]
+            yield from Progress(ret)
 
         except ValueError as e:
             status('trying jsonl')
